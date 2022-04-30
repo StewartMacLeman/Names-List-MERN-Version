@@ -1,14 +1,11 @@
 import React from "react";
 
-const NameItem = () => {
+const NameItem = (props) => {
   return (
     <>
-      <p>
-        <span className="firstName">FirstName</span>
-        <span className="lastName"> LastName</span>
-      </p>
+      <p>{props.firstName} {props.lastName}</p>
       <div className="buttonsCont">
-        <div className="hiddenDiv" data-id_value="<%= name._id %>"></div>
+        <div className="hiddenDiv" data-id_value={`${props.id}`}></div>
         <button className="deleteName delCol">Delete</button>
         <button className="editName">Edit</button>
       </div>
