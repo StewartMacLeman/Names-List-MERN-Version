@@ -125,6 +125,7 @@ button:hover {
   left: 10%;
 }
 /* Hidden class ---------------------------------------- */
+/* To be removed???????? */
 .hiddenDiv {
   display: none;
 }

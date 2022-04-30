@@ -1,22 +1,6 @@
 import React from "react";
 import NameItem from "./NameItem";
 
-// const NoNames = () => {
-//     return (
-//         <h3>You have no names!</h3>
-//     )
-// }
-// const OneName = () => {
-//     return (
-//         <h3>You have one name!</h3>
-//     )
-// }
-// const ManyNames = (props) => {
-//     return (
-//         <h3>You have {props.names.length} names!</h3>
-//     )
-// }
-
 const NamesCont = (props) => {
 
   return (
@@ -31,6 +15,8 @@ const NamesCont = (props) => {
             id={item._id}
             firstName={item.f_name}
             lastName={item.l_name}
+            showDeleteModal={props.showDeleteModal}
+            showEditModal={props.showEditModal}
           />
         );
       })}

@@ -1,14 +1,14 @@
 import React from "react";
 
-const DeleteForm = () => {
+const DeleteForm = (props) => {
   return (
-    <form className="deleteForm hiddenDiv" onSubmit={(e) => e.preventDefault()}>
+    <form className="deleteForm" onSubmit={(e) => e.preventDefault()}>
       <div className="buttonsCont">
         <input type="hidden" />
-        <button type="button" className="delCol">
+        <button type="button" className="delCol" onClick={props.confirmDelete}>
           Confirm
         </button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={props.cancelDelete}>Cancel</button>
       </div>
     </form>
   );
