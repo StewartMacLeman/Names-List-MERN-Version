@@ -4,18 +4,20 @@ const NameItem = (props) => {
   return (
     <>
       <p>
-        {props.firstName} {props.lastName}
+        <span className="first">{props.firstName}</span>
+        <span>{" "}</span>
+        <span className="last">{props.lastName}</span>
       </p>
       <div className="buttonsCont">
         <button
-          className="deleteName delCol"
+          className="delCol"
           value={`${props.id}`}
           onClick={props.showDeleteModal}
         >
           Delete
         </button>
         <button
-          className="editName"
+          className=""
           value={`${props.id}`}
           onClick={props.showEditModal}
         >

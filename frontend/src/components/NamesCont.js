@@ -2,12 +2,11 @@ import React from "react";
 import NameItem from "./NameItem";
 
 const NamesCont = (props) => {
-
   return (
     <section className="namesCont">
-      {(props.names.length === 0) && <h3>You have no names!</h3>}
-      {(props.names.length === 1) && <h3>You have one name!</h3>}
-      {(props.names.length > 1) && <h3>You have {props.names.length} names!</h3> }
+      {props.names.length === 0 && <h3>You have no names!</h3>}
+      {props.names.length === 1 && <h3>You have one name!</h3>}
+      {props.names.length > 1 && <h3>You have {props.names.length} names!</h3>}
       {props.names.map((item) => {
         return (
           <NameItem
