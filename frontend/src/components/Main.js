@@ -17,7 +17,7 @@ const Main = (props) => {
   const [editId, setEditId] = useState("");
   const [editedFirstName, setEditedFirstName] = useState("");
   const [editedLastName, setEditedLastName] = useState("");
-  
+
   const [fetchError, setFetchError] = useState(null);
   const URL = "http://localhost:5000";
   // Read Functions. --------------------------------------
@@ -25,9 +25,9 @@ const Main = (props) => {
     const fetchItems = async () => {
       try {
         const response = await fetch(URL);
-        if (!response.ok){
+        if (!response.ok) {
           throw Error("The data was not returned!");
-        } 
+        }
         const nameItems = await response.json();
         // To be removed!
         console.log(nameItems);
@@ -38,10 +38,28 @@ const Main = (props) => {
         console.log(error.message);
         setFetchError(error.message);
       }
-    }
+    };
     fetchItems();
   }, []);
+
   // Create Functions. ------------------------------------
+  const createName = async (firstName, lastName) => {
+    let newNameObject = {
+      f_name: firstName,
+      l_name: lastName,
+    };
+    try {
+      await fetch(URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newNameObject),
+      });
+    } catch (err) {
+      console.log(err);
+    } 
+  };
   const handleNewName = (e) => {
     e.preventDefault();
     if (
@@ -54,6 +72,15 @@ const Main = (props) => {
     console.log("The submit button was clicked!");
     console.log(`The name submitted was ${newFirstName} ${newLastName}`);
     // Fetch function call!
+    createName(newFirstName, newLastName);
+    // Temporary re-render values --------
+    let tempObject = {
+      _id: Math.random(),
+      f_name: newFirstName,
+      l_name: newLastName,
+    };
+    setNames([...names, tempObject]);
+    // -------------------------------------
     setNewFirstName("");
     setNewLastName("");
   };
