@@ -58,7 +58,7 @@ const Main = (props) => {
       });
     } catch (err) {
       console.log(err);
-    } 
+    }
   };
   const handleNewName = (e) => {
     e.preventDefault();
@@ -97,9 +97,46 @@ const Main = (props) => {
     setShowModalDiv(false);
     setShowDelete(false);
   };
-  const confirmDelete = () => {
-    console.log("The item was confirmed for deletion");
-    // Fetch function call!
+  const deleteName = async (delId) => {
+    let newNameObject = {
+      id: delId,
+    };
+    try {
+      await fetch(URL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newNameObject),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const confirmDelete = (e) => {
+    e.preventDefault();
+    console.log(`The id value is: ${deleteId}`);
+    // --------------------------------------------
+    let idPresent = names
+      .map((item) => {
+        return item._id;
+      })
+      .includes(deleteId);
+    console.log(`Id state: ${idPresent}`);
+    if (!idPresent) {
+      let amendedNames = names.filter((name) => {
+        return name._id != deleteId;
+      });
+      setNames(amendedNames);
+    } else if (idPresent) {
+      // Fetch function call!
+      deleteName(deleteId);
+      let amendedNames = names.filter((name) => {
+        return name._id != deleteId;
+      });
+      setNames(amendedNames);
+    }
     // Temp functions!
     setDeleteId("");
     setShowModalDiv(false);

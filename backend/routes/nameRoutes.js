@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
   res.status(200);
 });
 
-router.post("/delete", async (req, res) => {
+router.delete("/", async (req, res) => {
   const id = req.body.id;
   try {
     await client.connect();
