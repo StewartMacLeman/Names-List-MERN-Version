@@ -1,9 +1,11 @@
 // const path = require('path');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const nameRoutes = require('./routes/nameRoutes')
 
 // app.use(express.urlencoded({extended: false}));
+app.use(cors());
 app.use(express.json());
 // app.use(express.static('public'));
 // app.set('views', path.join(__dirname, 'views'));

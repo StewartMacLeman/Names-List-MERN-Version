@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NamesCont from "./NamesCont";
 import CreateForm from "./forms/CreateForm";
 import ModalDiv from "./forms/ModalDiv";
@@ -6,7 +6,8 @@ import EditForm from "./forms/EditForm";
 import DeleteForm from "./forms/DeleteForm";
 
 const Main = (props) => {
-  const [names, setNames] = useState(props.starterData);
+  // const [names, setNames] = useState(props.starterData);
+  const [names, setNames] = useState([]);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [showModalDiv, setShowModalDiv] = useState(false);
@@ -16,8 +17,30 @@ const Main = (props) => {
   const [editId, setEditId] = useState("");
   const [editedFirstName, setEditedFirstName] = useState("");
   const [editedLastName, setEditedLastName] = useState("");
-
+  
+  const [fetchError, setFetchError] = useState(null);
+  const URL = "http://localhost:5000";
   // Read Functions. --------------------------------------
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(URL);
+        if (!response.ok){
+          throw Error("The data was not returned!");
+        } 
+        const nameItems = await response.json();
+        // To be removed!
+        console.log(nameItems);
+        setNames(nameItems);
+        setFetchError(null);
+      } catch (error) {
+        // To be removed!
+        console.log(error.message);
+        setFetchError(error.message);
+      }
+    }
+    fetchItems();
+  }, []);
   // Create Functions. ------------------------------------
   const handleNewName = (e) => {
     e.preventDefault();
@@ -103,6 +126,7 @@ const Main = (props) => {
         handleNewName={handleNewName}
       />
       <NamesCont
+        fetchError={fetchError}
         names={names}
         showDeleteModal={showDeleteModal}
         showEditModal={showEditModal}
