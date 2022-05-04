@@ -7,7 +7,6 @@ import DeleteForm from "./forms/DeleteForm";
 import ReloadButton from "./forms/ReloadButton";
 
 const Main = (props) => {
-  // const [names, setNames] = useState(props.starterData);
   const [names, setNames] = useState([]);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -73,33 +72,24 @@ const Main = (props) => {
     }
     console.log("The submit button was clicked!");
     console.log(`The name submitted was ${newFirstName} ${newLastName}`);
-
     // Fetch function call!
-      createName(newFirstName, newLastName);
-      setNewFirstName("");
-      setNewLastName("");
-      console.log(names);
-    // Temporary re-render values --------
-    // let tempObject = {
-    //   _id: Math.random(),
-    //   f_name: newFirstName,
-    //   l_name: newLastName,
-    // };
-    // setNames([...names, tempObject]);
-    // -------------------------------------
+    createName(newFirstName, newLastName);
+    setNewFirstName("");
+    setNewLastName("");
+    console.log(names);
     showReloadModal();
   };
   // Show reload. ---------------------------------------
   const showReloadModal = () => {
     setShowModalDiv(true);
     setShowReload(true);
-  }
+  };
   const handleReload = () => {
-    console.log('I was clicked!')
+    console.log("I was clicked!");
     setShowModalDiv(false);
     setShowReload(false);
-    setReload(reload => !reload);
-  }
+    setReload((reload) => !reload);
+  };
   // Delete functions. -----------------------------------
   const showDeleteModal = (e) => {
     let id = e.target.value;
@@ -133,27 +123,12 @@ const Main = (props) => {
   const confirmDelete = (e) => {
     e.preventDefault();
     console.log(`The id value is: ${deleteId}`);
-    // --------------------------------------------
-    let idPresent = names
-      .map((item) => {
-        return item._id;
-      })
-      .includes(deleteId);
-    console.log(`Id state: ${idPresent}`);
-    if (!idPresent) {
-      let amendedNames = names.filter((name) => {
-        return name._id != deleteId;
-      });
-      setNames(amendedNames);
-    } else if (idPresent) {
-      // Fetch function call!
-      deleteName(deleteId);
-      let amendedNames = names.filter((name) => {
-        return name._id != deleteId;
-      });
-      setNames(amendedNames);
-    }
-    // Temp functions!
+    // Fetch function call!
+    deleteName(deleteId);
+    let amendedNames = names.filter((name) => {
+      return name._id != deleteId;
+    });
+    setNames(amendedNames);
     setDeleteId("");
     setShowModalDiv(false);
     setShowDelete(false);
@@ -183,11 +158,47 @@ const Main = (props) => {
     setShowModalDiv(false);
     setShowEdit(false);
   };
+  const editName = async (id, firstName, lastName) => {
+    let editedNameObject = {
+      id: id,
+      f_name_edit: firstName,
+      l_name_edit: lastName,
+    };
+    try {
+      await fetch(URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedNameObject),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const confirmEdit = (e) => {
     e.preventDefault();
     console.log("The item was confirmed for an edit!");
     // Fetch function call!
-    // Temp functions!
+    editName(editId, editedFirstName, editedLastName);
+    let editedObject = {
+      _id: editId,
+      f_name: editedFirstName,
+      l_name: editedLastName,
+    };
+    let idArray = names.map((item) => item._id);
+    console.log(`IdArray: ${idArray}`);
+    let idIndexNumber = idArray.indexOf(editId);
+    console.log(`Index Number: ${idIndexNumber}`);
+    let editedNames = names.map((item, index) => {
+      if (index == idIndexNumber) {
+        return editedObject;
+      } else {
+        return item;
+      }
+    });
+    setNames(editedNames);
     setEditId("");
     setEditedFirstName("");
     setEditedLastName("");

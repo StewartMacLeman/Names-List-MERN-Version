@@ -51,7 +51,7 @@ router.delete("/", async (req, res) => {
   res.status(200);
 });
 
-router.post('/edit', async (req, res) => {
+router.put('/', async (req, res) => {
   let id = req.body.id;
   let firstName = req.body.f_name_edit;
   let lastName = req.body.l_name_edit;
