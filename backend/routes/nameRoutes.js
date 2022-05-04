@@ -20,7 +20,6 @@ router.get("/", async (req, res) => {
     await client.close();
   }
   res.status(200).json(dbArray);
-  // res.render("index", { namesArray: dbArray, noOfNames: dbArray.length });
 });
 
 router.post("/", async (req, res) => {

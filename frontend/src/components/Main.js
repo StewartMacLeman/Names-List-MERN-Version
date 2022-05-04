@@ -4,6 +4,7 @@ import CreateForm from "./forms/CreateForm";
 import ModalDiv from "./forms/ModalDiv";
 import EditForm from "./forms/EditForm";
 import DeleteForm from "./forms/DeleteForm";
+import ReloadButton from "./forms/ReloadButton";
 
 const Main = (props) => {
   // const [names, setNames] = useState(props.starterData);
@@ -17,6 +18,8 @@ const Main = (props) => {
   const [editId, setEditId] = useState("");
   const [editedFirstName, setEditedFirstName] = useState("");
   const [editedLastName, setEditedLastName] = useState("");
+  const [showReload, setShowReload] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const [fetchError, setFetchError] = useState(null);
   const URL = "http://localhost:5000";
@@ -40,8 +43,7 @@ const Main = (props) => {
       }
     };
     fetchItems();
-  }, []);
-
+  }, [reload]);
   // Create Functions. ------------------------------------
   const createName = async (firstName, lastName) => {
     let newNameObject = {
@@ -71,19 +73,33 @@ const Main = (props) => {
     }
     console.log("The submit button was clicked!");
     console.log(`The name submitted was ${newFirstName} ${newLastName}`);
+
     // Fetch function call!
-    createName(newFirstName, newLastName);
+      createName(newFirstName, newLastName);
+      setNewFirstName("");
+      setNewLastName("");
+      console.log(names);
     // Temporary re-render values --------
-    let tempObject = {
-      _id: Math.random(),
-      f_name: newFirstName,
-      l_name: newLastName,
-    };
-    setNames([...names, tempObject]);
+    // let tempObject = {
+    //   _id: Math.random(),
+    //   f_name: newFirstName,
+    //   l_name: newLastName,
+    // };
+    // setNames([...names, tempObject]);
     // -------------------------------------
-    setNewFirstName("");
-    setNewLastName("");
+    showReloadModal();
   };
+  // Show reload. ---------------------------------------
+  const showReloadModal = () => {
+    setShowModalDiv(true);
+    setShowReload(true);
+  }
+  const handleReload = () => {
+    console.log('I was clicked!')
+    setShowModalDiv(false);
+    setShowReload(false);
+    setReload(reload => !reload);
+  }
   // Delete functions. -----------------------------------
   const showDeleteModal = (e) => {
     let id = e.target.value;
@@ -196,6 +212,7 @@ const Main = (props) => {
         showEditModal={showEditModal}
       />
       {showModalDiv && <ModalDiv />}
+      {showReload && <ReloadButton reloadList={handleReload} />}
       {showEdit && (
         <EditForm
           editedFirstName={editedFirstName}

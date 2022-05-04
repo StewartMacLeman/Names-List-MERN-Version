@@ -101,7 +101,7 @@ button:hover {
   z-index: 1;
 }
 /* Delete Form  ---------------------------------------- */
-.deleteForm, .editForm {
+.deleteForm, .editForm, .reloadDiv {
   width: 60%;
   height: 50%;
   background-color: white;
