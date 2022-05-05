@@ -22,7 +22,8 @@ const Main = (props) => {
 
   const [fetchError, setFetchError] = useState(null);
   const URL = "http://localhost:5000";
-  // Read Functions. --------------------------------------
+
+  // Read Functions. ----------------------------------------
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -31,19 +32,16 @@ const Main = (props) => {
           throw Error("The data was not returned!");
         }
         const nameItems = await response.json();
-        // To be removed!
-        console.log(nameItems);
         setNames(nameItems);
         setFetchError(null);
       } catch (error) {
-        // To be removed!
-        console.log(error.message);
         setFetchError(error.message);
       }
     };
     fetchItems();
   }, [reload]);
-  // Create Functions. ------------------------------------
+
+  // Create Functions. ---------------------------------------
   const createName = async (firstName, lastName) => {
     let newNameObject = {
       f_name: firstName,
@@ -70,30 +68,27 @@ const Main = (props) => {
     ) {
       return;
     }
-    console.log("The submit button was clicked!");
-    console.log(`The name submitted was ${newFirstName} ${newLastName}`);
     // Fetch function call!
     createName(newFirstName, newLastName);
+    // -----------------------------------
     setNewFirstName("");
     setNewLastName("");
-    console.log(names);
     showReloadModal();
   };
-  // Show reload. ---------------------------------------
+  // Show reload. -------------------------------------------
   const showReloadModal = () => {
     setShowModalDiv(true);
     setShowReload(true);
   };
   const handleReload = () => {
-    console.log("I was clicked!");
     setShowModalDiv(false);
     setShowReload(false);
     setReload((reload) => !reload);
   };
-  // Delete functions. -----------------------------------
+
+  // Delete functions. ---------------------------------------
   const showDeleteModal = (e) => {
     let id = e.target.value;
-    console.log(`Value: ${id}`);
     setDeleteId(id);
     setShowModalDiv(true);
     setShowDelete(true);
@@ -122,9 +117,9 @@ const Main = (props) => {
 
   const confirmDelete = (e) => {
     e.preventDefault();
-    console.log(`The id value is: ${deleteId}`);
     // Fetch function call!
     deleteName(deleteId);
+    // ---------------------
     let amendedNames = names.filter((name) => {
       return name._id != deleteId;
     });
@@ -133,7 +128,8 @@ const Main = (props) => {
     setShowModalDiv(false);
     setShowDelete(false);
   };
-  // Edit functions. -----------------------------------
+
+  // Edit functions. ----------------------------------------
   const showEditModal = (e) => {
     let id = e.target.value;
     let firstName =
@@ -142,9 +138,6 @@ const Main = (props) => {
       ).textContent;
     let lastName =
       e.target.parentElement.previousSibling.querySelector(".last").textContent;
-    console.log(`Value: ${id}`);
-    console.log(`First Name: ${firstName}`);
-    console.log(`Last Name: ${lastName}`);
     setEditId(id);
     setEditedFirstName(firstName);
     setEditedLastName(lastName);
@@ -179,18 +172,16 @@ const Main = (props) => {
 
   const confirmEdit = (e) => {
     e.preventDefault();
-    console.log("The item was confirmed for an edit!");
     // Fetch function call!
     editName(editId, editedFirstName, editedLastName);
+    // -----------------------------------------------
     let editedObject = {
       _id: editId,
       f_name: editedFirstName,
       l_name: editedLastName,
     };
     let idArray = names.map((item) => item._id);
-    console.log(`IdArray: ${idArray}`);
     let idIndexNumber = idArray.indexOf(editId);
-    console.log(`Index Number: ${idIndexNumber}`);
     let editedNames = names.map((item, index) => {
       if (index == idIndexNumber) {
         return editedObject;

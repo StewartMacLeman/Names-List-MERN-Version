@@ -19,6 +19,7 @@ h1, h2, h3, p, label, input, button {
 }
 body {
   margin: 0 auto;
+  width: 80%;
 }
 /* Button styles ---------------------------------------- */
 button {
@@ -32,7 +33,7 @@ button:hover {
   color: black;
   cursor: pointer;
 }
-/* Header styles ---------------------------------------- */
+/* Header styles --------------------------------------- */
 .header {
   width: 100%;
   border-bottom: .25rem solid cornflowerblue;
@@ -124,14 +125,9 @@ button:hover {
   flex-direction: column;
   left: 10%;
 }
-/* Hidden class ---------------------------------------- */
-/* To be removed???????? */
-.hiddenDiv {
-  display: none;
-}
 /* Footer styles ---------------------------------------- */
 .footer {
-  width: 100%;
+  width: 80%;
   border-top: .25rem solid cornflowerblue;
   margin-top: 1rem;
   position: fixed;
@@ -143,10 +139,12 @@ button:hover {
 }
 @media screen and (max-width: 800px){
   html { font-size: 12px; }
+  body, .footer { width: 100%; }
   .main { height: 65vh; }
 }
 @media screen and (max-width: 400px){
   html { font-size: 8px; }
+  .main { height: 75vh; }
   .deleteForm .buttonsCont, .editForm .buttonsCont {
       display: flex;
       flex-direction: column;
